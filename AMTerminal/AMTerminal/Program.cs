@@ -1,24 +1,36 @@
-﻿using AngouriMath;
-using AngouriMath.Core.Exceptions;
+﻿using AngouriMath.Core.Exceptions;
 using AMTerminal;
 using static AMTerminal.ArgumentParser;
 using AngouriMath.Extensions;
+using System;
+using AngouriMath;
 
-var exit = false;
+Console.WriteLine(@$"
+Terminal for AngouriMath 2019-2020. AngouriMath's assembly version: {typeof(Entity).Assembly.GetName().Version}. MIT License.
+");
+
 var console = new NotebookStyleConsole();
 var parser = new ArgumentParser();
+var exit = false;
+Console.Title = "AngouriMath terminal";
 
 while (!exit)
 {
+#if DEBUG
+#else
     try
     {
+#endif
         var inp = console.ReadNextInput();
         var (cmd, arguments) = parser.Parse(inp);
+
         console.WriteNextOutput(
             cmd switch
             {
+                "exit" when AssertNumberOfArguments(cmd, 0, arguments.Length)
+                    => throw new UserExitException(),
                 "simplify" when AssertNumberOfArguments(cmd, 1, arguments.Length)
-                    => arguments[0].Simplify(),
+                    => arguments[0].ToEntity().Simplify(),
                 "eval" or "evaluate" when AssertNumberOfArguments(cmd, 1, arguments.Length)
                     => arguments[0].ToEntity().Evaled,
                 "solve" when AssertNumberOfArguments(cmd, 2, arguments.Length)
@@ -38,6 +50,12 @@ while (!exit)
                 var unrecognized => throw new UnrecognizedCommand(unrecognized)
             }
             );
+#if DEBUG
+#else
+    }
+    catch (UserExitException)
+    {
+        exit = true;
     }
     catch (EmptyRequestException)
     {
@@ -49,7 +67,7 @@ while (!exit)
     }
     catch (UnrecognizedCommand unrec)
     {
-        console.WriteError($"Unknown command: {unrec}");
+        console.WriteError($"Unknown command: {unrec.Command}");
     }
     catch (ParseException parseException)
     {
@@ -59,5 +77,8 @@ while (!exit)
     {
         console.WriteError($"AngouriMath's bug: {amBug.Message}. It would be appreciated if you reported about it to us");
     }
+#endif
 }
 
+
+internal sealed class UserExitException : Exception { }
