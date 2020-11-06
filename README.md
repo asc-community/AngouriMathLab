@@ -7,6 +7,14 @@ can run some AM's commands.
 
 ### Syntax
 
+Either directly put an expression to be simplified
+
+```
+1 + 2
+```
+
+or use syntax
+
 ```
 [command] << [argument #1] << [argument #2] << ...
 ```

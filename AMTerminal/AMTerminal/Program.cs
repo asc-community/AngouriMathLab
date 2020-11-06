@@ -1,13 +1,17 @@
-﻿using AngouriMath.Core.Exceptions;
-using AMTerminal;
+﻿using AMTerminal;
 using static AMTerminal.ArgumentParser;
 using AngouriMath.Extensions;
 using System;
 using AngouriMath;
+using System.Linq;
+using AngouriMath.Core.Exceptions;
 
-Console.WriteLine(@$"
-Terminal for AngouriMath 2019-2020. AngouriMath's assembly version: {typeof(Entity).Assembly.GetName().Version}. MIT License.
+Console.ForegroundColor = ConsoleColor.Yellow;
+Console.WriteLine(@$"Terminal for AngouriMath
+AngouriMath's assembly version: {typeof(Entity).Assembly.GetName().Version}.
+(c) Angouri 2019-2020 MIT license
 ");
+Console.ForegroundColor = ConsoleColor.White;
 
 var console = new NotebookStyleConsole();
 var parser = new ArgumentParser();
@@ -47,7 +51,8 @@ while (!exit)
                     => arguments[2].Limit(arguments[0], arguments[1], AngouriMath.Core.ApproachFrom.Right),
                 "latex" when AssertNumberOfArguments(cmd, 1, arguments.Length)
                     => arguments[0].Latexise(),
-                var unrecognized => throw new UnrecognizedCommand(unrecognized)
+                "" => throw new EmptyRequestException(),
+                var expression => expression.Last() == '\u0005' ? string.Join("", expression.SkipLast(1)).ToEntity().Evaled : expression.ToEntity().Simplify(10)
             }
             );
 #if DEBUG
@@ -71,7 +76,7 @@ while (!exit)
     }
     catch (ParseException parseException)
     {
-        console.WriteError($"ParseException {parseException.Message}");
+        console.WriteError($"Parse error: {parseException.Message}");
     }
     catch (AngouriBugException amBug)
     {
