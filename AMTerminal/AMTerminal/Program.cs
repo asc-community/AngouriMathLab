@@ -5,6 +5,8 @@ using System;
 using AngouriMath;
 using System.Linq;
 using AngouriMath.Core.Exceptions;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 Console.ForegroundColor = ConsoleColor.Yellow;
 Console.WriteLine(@$"Terminal for AngouriMath
@@ -18,6 +20,9 @@ var parser = new ArgumentParser();
 var exit = false;
 Console.Title = "AngouriMath terminal";
 
+var outputStack = new Stack<Entity>();
+var popVar = MathS.Var("pop");
+
 while (!exit)
 {
 #if DEBUG
@@ -28,33 +33,54 @@ while (!exit)
         var inp = console.ReadNextInput();
         var (cmd, arguments) = parser.Parse(inp);
 
-        console.WriteNextOutput(
+        var entityArguments = arguments.Select(PreProcessor).ToArray();
+
+        Entity PreProcessor(string str)
+        {
+            var res = str.ToEntity().Replace(ent => ent == popVar ? outputStack.Pop() : ent);
+            for (int i = 1; i < 10; i++)
+            {
+                var var = MathS.Var($"pop_{i}");
+                if (!res.Nodes.Contains(var))
+                    break;
+                res = res.Substitute(var, outputStack.Pop());
+            }
+            return res;
+        }
+
+        static Entity PostProcessor(Entity entity)
+            => entity.Complexity > 1000 ? entity.InnerSimplified : entity.Simplify();
+
+        var output = (
             cmd switch
             {
-                "exit" when AssertNumberOfArguments(cmd, 0, arguments.Length)
+                "exit" when AssertNumberOfArguments(cmd, 0, entityArguments.Length)
                     => throw new UserExitException(),
-                "simplify" when AssertNumberOfArguments(cmd, 1, arguments.Length)
-                    => arguments[0].ToEntity().Simplify(),
-                "eval" or "evaluate" when AssertNumberOfArguments(cmd, 1, arguments.Length)
-                    => arguments[0].ToEntity().Evaled,
-                "solve" when AssertNumberOfArguments(cmd, 2, arguments.Length)
-                    => arguments[1].Solve(arguments[0]),
-                "diff" or "differentiate" when AssertNumberOfArguments(cmd, 2, arguments.Length)
-                    => arguments[1].Differentiate(arguments[0]),
-                "int" or "integrate" when AssertNumberOfArguments(cmd, 2, arguments.Length)
-                    => arguments[1].Integrate(arguments[0]),
-                "lim" or "limit" when AssertNumberOfArguments(cmd, 3, arguments.Length)
-                    => arguments[2].Limit(arguments[0], arguments[1]),
-                "limleft" when AssertNumberOfArguments(cmd, 3, arguments.Length)
-                    => arguments[2].Limit(arguments[0], arguments[1], AngouriMath.Core.ApproachFrom.Left),
-                "limright" when AssertNumberOfArguments(cmd, 3, arguments.Length)
-                    => arguments[2].Limit(arguments[0], arguments[1], AngouriMath.Core.ApproachFrom.Right),
-                "latex" when AssertNumberOfArguments(cmd, 1, arguments.Length)
-                    => arguments[0].Latexise(),
+                "simplify" when AssertNumberOfArguments(cmd, 1, entityArguments.Length)
+                    => entityArguments[0].Simplify(),
+                "eval" or "evaluate" when AssertNumberOfArguments(cmd, 1, entityArguments.Length)
+                    => entityArguments[0].Evaled,
+                "solve" when AssertNumberOfArguments(cmd, 2, entityArguments.Length)
+                    => entityArguments[1].Solve(AsVar(entityArguments[0])),
+                "diff" or "differentiate" when AssertNumberOfArguments(cmd, 2, entityArguments.Length)
+                    => entityArguments[1].Differentiate(AsVar(entityArguments[0])),
+                "int" or "integrate" when AssertNumberOfArguments(cmd, 2, entityArguments.Length)
+                    => entityArguments[1].Integrate(AsVar(entityArguments[0])),
+                "lim" or "limit" when AssertNumberOfArguments(cmd, 3, entityArguments.Length)
+                    => entityArguments[2].Limit(AsVar(entityArguments[0]), entityArguments[1]),
+                "limleft" when AssertNumberOfArguments(cmd, 3, entityArguments.Length)
+                    => entityArguments[2].Limit(AsVar(entityArguments[0]), entityArguments[1], AngouriMath.Core.ApproachFrom.Left),
+                "limright" when AssertNumberOfArguments(cmd, 3, entityArguments.Length)
+                    => entityArguments[2].Limit(AsVar(entityArguments[0]), entityArguments[1], AngouriMath.Core.ApproachFrom.Right),
+                "latex" when AssertNumberOfArguments(cmd, 1, entityArguments.Length)
+                    => entityArguments[0].Latexise(),
                 "" => throw new EmptyRequestException(),
-                var expression => expression.Last() == '\u0005' ? string.Join("", expression.SkipLast(1)).ToEntity().Evaled : expression.ToEntity().Simplify(10)
+                var expression => expression.Last() == '\u0005' ? PreProcessor(string.Join("", expression.SkipLast(1))).Evaled : PreProcessor(expression).Simplify(10)
             }
             );
+        outputStack.Push(output);
+        console.WriteNextOutput(PostProcessor(output));
+
 #if DEBUG
 #else
     }
@@ -85,5 +111,11 @@ while (!exit)
 #endif
 }
 
+static Entity.Variable AsVar(Entity entity)
+{
+    if (entity is Entity.Variable v)
+        return v;
+    throw new ExpectedVariableException();
+}
 
 internal sealed class UserExitException : Exception { }

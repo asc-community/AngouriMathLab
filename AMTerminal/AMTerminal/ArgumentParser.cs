@@ -6,6 +6,8 @@ namespace AMTerminal
 {
     internal abstract class InvalidInputException : Exception { }
 
+    internal sealed class ExpectedVariableException : Exception { }
+
     internal sealed class EmptyRequestException : InvalidInputException { }
 
     internal sealed class InvalidNumberOfArgumentsException : InvalidInputException
