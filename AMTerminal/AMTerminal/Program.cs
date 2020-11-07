@@ -90,7 +90,7 @@ while (!exit)
 
                 "" => throw new EmptyRequestException(),
 
-                var expression => expression.Last() == '\u0005' ? Evaluate(string.Join("", expression.SkipLast(1))) : PostProcessor(PreProcessor(expression).Simplify(10))
+                var expression => expression.Last() == '\u0005' ? Evaluate(string.Join("", expression.SkipLast(1))) : PostProcessor(PreProcessor(expression).Simplify())
             }
             );
 
