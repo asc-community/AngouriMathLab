@@ -7,6 +7,7 @@ using System.Linq;
 using AngouriMath.Core.Exceptions;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using static AngouriMath.Entity.Number;
 
 Console.ForegroundColor = ConsoleColor.Yellow;
 Console.WriteLine(@$"Terminal for AngouriMath
@@ -48,38 +49,53 @@ while (!exit)
             return res;
         }
 
-        static Entity PostProcessor(Entity entity)
-            => entity.Complexity > 1000 ? entity.InnerSimplified : entity.Simplify();
+        static string PostProcessor(Entity entity)
+            => (entity.Complexity > 1000 ? entity.InnerSimplified : entity.Simplify()).ToString();
+
+        static string Evaluate(Entity str)
+            => str.EvalNumerical() is Real re ? re.EDecimal.ToString() : str.EvalNumerical().ToString();
 
         var output = (
             cmd switch
             {
                 "exit" when AssertNumberOfArguments(cmd, 0, entityArguments.Length)
                     => throw new UserExitException(),
+
                 "simplify" when AssertNumberOfArguments(cmd, 1, entityArguments.Length)
-                    => entityArguments[0].Simplify(),
-                "eval" or "evaluate" when AssertNumberOfArguments(cmd, 1, entityArguments.Length)
-                    => entityArguments[0].Evaled,
+                    => PostProcessor(entityArguments[0].Simplify()),
+
                 "solve" when AssertNumberOfArguments(cmd, 2, entityArguments.Length)
-                    => entityArguments[1].Solve(AsVar(entityArguments[0])),
+                    => PostProcessor(entityArguments[1].Solve(AsVar(entityArguments[0]))),
+
                 "diff" or "differentiate" when AssertNumberOfArguments(cmd, 2, entityArguments.Length)
-                    => entityArguments[1].Differentiate(AsVar(entityArguments[0])),
+                    => PostProcessor(entityArguments[1].Differentiate(AsVar(entityArguments[0]))),
+
                 "int" or "integrate" when AssertNumberOfArguments(cmd, 2, entityArguments.Length)
-                    => entityArguments[1].Integrate(AsVar(entityArguments[0])),
+                    => PostProcessor(entityArguments[1].Integrate(AsVar(entityArguments[0]))),
+
                 "lim" or "limit" when AssertNumberOfArguments(cmd, 3, entityArguments.Length)
-                    => entityArguments[2].Limit(AsVar(entityArguments[0]), entityArguments[1]),
+                    => PostProcessor(entityArguments[2].Limit(AsVar(entityArguments[0]), entityArguments[1])),
+
                 "limleft" when AssertNumberOfArguments(cmd, 3, entityArguments.Length)
-                    => entityArguments[2].Limit(AsVar(entityArguments[0]), entityArguments[1], AngouriMath.Core.ApproachFrom.Left),
+                    => PostProcessor(entityArguments[2].Limit(AsVar(entityArguments[0]), entityArguments[1], AngouriMath.Core.ApproachFrom.Left)),
+
                 "limright" when AssertNumberOfArguments(cmd, 3, entityArguments.Length)
-                    => entityArguments[2].Limit(AsVar(entityArguments[0]), entityArguments[1], AngouriMath.Core.ApproachFrom.Right),
+                    => PostProcessor(entityArguments[2].Limit(AsVar(entityArguments[0]), entityArguments[1], AngouriMath.Core.ApproachFrom.Right)),
+
                 "latex" when AssertNumberOfArguments(cmd, 1, entityArguments.Length)
                     => entityArguments[0].Latexise(),
+
+                "eval" or "evaluate" when AssertNumberOfArguments(cmd, 1, entityArguments.Length)
+                    => Evaluate(entityArguments[0]),
+
                 "" => throw new EmptyRequestException(),
-                var expression => expression.Last() == '\u0005' ? PreProcessor(string.Join("", expression.SkipLast(1))).Evaled : PreProcessor(expression).Simplify(10)
+
+                var expression => expression.Last() == '\u0005' ? Evaluate(string.Join("", expression.SkipLast(1))) : PostProcessor(PreProcessor(expression).Simplify(10))
             }
             );
+
         outputStack.Push(output);
-        console.WriteNextOutput(PostProcessor(output));
+        console.WriteNextOutput(output);
 
 #if DEBUG
 #else
