@@ -88,6 +88,9 @@ while (!exit)
                 "eval" or "evaluate" when AssertNumberOfArguments(cmd, 1, entityArguments.Length)
                     => Evaluate(entityArguments[0]),
 
+                "sub" or "subs" or "substitute" when AssertNumberOfArguments(cmd, 3, entityArguments.Length)
+                    => PostProcessor(entityArguments[2].Substitute(entityArguments[0], entityArguments[1])),
+
                 "" => throw new EmptyRequestException(),
 
                 var expression => expression.Last() == '\u0005' ? Evaluate(string.Join("", expression.SkipLast(1))) : PostProcessor(PreProcessor(expression).Simplify())
