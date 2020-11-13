@@ -1,11 +1,19 @@
-## AMTerminal
+## Try AngouriMath!
+
+### Jupyter notebooks
+
+Try it on binder soon!
+
+<img src="https://github.com/asc-community/AngouriMath/raw/master/additional/readme/interactive.PNG"/>
+
+### AMTerminal
 
 That's a simple terminal for AngouriMath I wrote. It's a console application which
 can run some AM's commands.
 
 <img src="./screenshot.png">
 
-### Syntax
+#### Syntax
 
 Either directly put an expression to be simplified
 
