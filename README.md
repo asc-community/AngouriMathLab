@@ -2,7 +2,9 @@
 
 ### Jupyter notebooks
 
-Try it on binder soon!
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/asc-community/Try/main)
+
+Try it on binder!
 
 <img src="https://github.com/asc-community/AngouriMath/raw/master/additional/readme/interactive.PNG"/>
 
