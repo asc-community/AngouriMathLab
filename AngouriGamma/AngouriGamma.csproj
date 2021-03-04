@@ -5,12 +5,21 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <LangVersion>9.0</LangVersion>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="icon.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AngouriMath" Version="1.2.0" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.1" />
     <PackageReference Include="WpfMath" Version="0.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="icon.png" />
   </ItemGroup>
 
 </Project>

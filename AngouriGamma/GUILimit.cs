@@ -1,14 +1,17 @@
 ﻿using AngouriMath;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace AngouriGamma
 {
-    public sealed class GUISolver
+    public sealed class GUILimit
     {
         public int Timeout { get; set; }
         private CancellationTokenSource lastTokenSource;
-        public async Task<Entity> Solve(Entity expr, Entity.Variable @var)
+        public async Task<Entity> FindLimit(Entity expr, Entity.Variable x, Entity dest, AngouriMath.Core.ApproachFrom from)
         {
             if (lastTokenSource is not null)
                 lastTokenSource.Cancel();
@@ -19,9 +22,7 @@ namespace AngouriGamma
                     () =>
                     {
                         MathS.Multithreading.SetLocalCancellationToken(tokenSource.Token);
-                        if (expr is Entity.Statement)
-                            return expr.Solve(@var).Simplify();
-                        return MathS.Equality(expr, 0).Solve(@var).Simplify();
+                        return expr.Limit(x, dest, from);
                     }, tokenSource.Token
                     ).ContinueWith(t => t.IsCanceled ? "Timeout" : t.Result);
         }

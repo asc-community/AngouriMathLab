@@ -9,13 +9,14 @@ namespace AngouriGamma
 {
     public sealed class GUISimplifier
     {
+        public int Timeout { get; set; }
         private CancellationTokenSource lastTokenSource;
         public async Task<Entity> Simplify(Entity expr)
         {
             if (lastTokenSource is not null)
                 lastTokenSource.Cancel();
             var tokenSource = new CancellationTokenSource();
-            tokenSource.CancelAfter(3000);
+            tokenSource.CancelAfter(Timeout);
             lastTokenSource = tokenSource;
             return await Task.Run(
                     () =>

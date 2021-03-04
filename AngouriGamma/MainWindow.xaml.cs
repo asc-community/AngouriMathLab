@@ -32,8 +32,9 @@ namespace AngouriGamma
         }
         private Renderer renderer = new();
 
-        private GUISimplifier simplifier = new();
-        private GUISolver solver = new();
+        private GUISimplifier simplifier = new() { Timeout = 3000 };
+        private GUISolver solver         = new() { Timeout = 3000 };
+        private GUILimit limiter         = new() { Timeout = 3000 };
         private async void OnComputationsRequested(object sender, KeyEventArgs e)
         {
             if (e.Key != Key.Enter)
@@ -44,21 +45,33 @@ namespace AngouriGamma
             if (text is "")
                 return;
             var varText = InputVar.Text;
-            Entity expr, simplified, roots = "{ }";
+            var destText = InputDest.Text;
+            var sideText = InputSide.Text;
+            Entity expr, simplified = "{ }", roots = "{ }", limit = "{ }";
             try
             {
                 expr = MathS.FromString(text);
                 simplified = await simplifier.Simplify(expr);
-                if (varText != "")
+                if (varText is not "")
+                {
                     roots = await solver.Solve(expr, varText);
-                
+                    if (destText is not "")
+                    {
+                        sideText = sideText is "" ? "<>" : sideText;
+                        limit = await limiter.FindLimit(expr, varText, destText, sideText
+                            switch
+                        {
+                            "<" => AngouriMath.Core.ApproachFrom.Left,
+                            ">" => AngouriMath.Core.ApproachFrom.Right,
+                            _ => AngouriMath.Core.ApproachFrom.BothSides
+                        });
+                    }
+                }
             }
-            catch (AngouriMath.Core.Exceptions.ParseException)
-            {
-                simplified = "Error";
-            }
+            catch (AngouriMath.Core.Exceptions.ParseException) { }
             OutputSimplified.Source = await renderer.Render(simplified.Latexise());
             OutputRoots.Source = await renderer.Render(roots.Latexise());
+            OutputLimit.Source = await renderer.Render(limit.InnerSimplified.Latexise());
         }
 
         private async void Input_TextChanged(object sender, TextChangedEventArgs e)

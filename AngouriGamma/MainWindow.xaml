@@ -5,18 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AngouriGamma"
         mc:Ignorable="d"
-        Title="MainWindow" Height="850" Width="800">
+        Title="AngouriMath graphic terminal" Height="950" Width="800">
     <Grid Margin="0,0,0,-7">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="63*"/>
-            <ColumnDefinition Width="37*"/>
+            <ColumnDefinition Width="29*"/>
+            <ColumnDefinition Width="223*"/>
+            <ColumnDefinition Width="148*"/>
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="Input" HorizontalAlignment="Left" Margin="116,48,0,0" Text="sin(x)" TextWrapping="Wrap" VerticalAlignment="Top" Width="504" FontSize="14" FontFamily="Sitka Text" KeyDown="OnComputationsRequested" TextChanged="Input_TextChanged" Grid.ColumnSpan="2"/>
-        <Image x:Name="OutputInitial" Margin="116,93,0,619" HorizontalAlignment="Left" Width="565" Grid.ColumnSpan="2"/>
-        <Image x:Name="OutputSimplified" Margin="116,277,0,435" HorizontalAlignment="Left" Width="565" Grid.ColumnSpan="2"/>
-        <TextBlock HorizontalAlignment="Left" Margin="116,248,0,0" Text="Simplified:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14"/>
-        <TextBox x:Name="InputVar" Grid.Column="1" HorizontalAlignment="Center" Margin="0,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="14" FontFamily="Sitka Text" Text="x"/>
-        <TextBlock HorizontalAlignment="Left" Margin="116,421,0,0" Text="Roots:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14"/>
-        <Image x:Name="OutputRoots" Margin="116,456,0,256" HorizontalAlignment="Left" Width="565" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="Input" HorizontalAlignment="Left" Margin="58,68,0,0" Text="(sin(x) - x) / x3" TextWrapping="Wrap" VerticalAlignment="Top" Width="483" FontSize="14" FontFamily="Sitka Text" KeyDown="OnComputationsRequested" TextChanged="Input_TextChanged" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <Image x:Name="OutputInitial" Margin="58,109,0,687" HorizontalAlignment="Left" Width="565" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <Image x:Name="OutputSimplified" Margin="58,305,0,486" HorizontalAlignment="Left" Width="565" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <TextBlock HorizontalAlignment="Left" Margin="58,264,0,0" Text="Simplified:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14" Grid.Column="1"/>
+        <TextBox x:Name="InputVar" Grid.Column="2" HorizontalAlignment="Left" Margin="100,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="22" FontSize="14" FontFamily="Sitka Text" Text="x"/>
+        <TextBlock HorizontalAlignment="Left" Margin="58,455,0,0" Text="Roots:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14" Grid.Column="1"/>
+        <Image x:Name="OutputRoots" Margin="58,488,0,259" HorizontalAlignment="Left" Width="565" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <TextBox x:Name="InputDest" Grid.Column="2" HorizontalAlignment="Left" Margin="126,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="22" FontSize="14" FontFamily="Sitka Text" Text="0"/>
+        <TextBox x:Name="InputSide" Grid.Column="2" HorizontalAlignment="Left" Margin="153,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="22" FontSize="14" FontFamily="Sitka Text"/>
+        <TextBlock HorizontalAlignment="Left" Margin="58,689,0,0" Text="Limit:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14" Grid.Column="1"/>
+        <Image x:Name="OutputLimit" Margin="58,727,0,39" HorizontalAlignment="Left" Width="565" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <Image HorizontalAlignment="Left" Height="44" Margin="251,10,0,0" VerticalAlignment="Top" Width="49" Source="/icon.png" Grid.Column="1"/>
+        <Label Content="AngouriMath" HorizontalAlignment="Left" Margin="300,16,0,0" VerticalAlignment="Top" FontFamily="Sitka Text" FontSize="18" Grid.Column="1"/>
     </Grid>
 </Window>
