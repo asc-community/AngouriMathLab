@@ -13,14 +13,21 @@ namespace AngouriGamma
         // \implies
         // \mathbb{RR}
 
-        private TexFormulaParser parser = new();
         public Task<BitmapSource> Render(string latex)
             => Task.Run(() =>
             {
-                var formula = parser.Parse(latex.Replace(@"\implies", @"\Rightarrow"));
-                var src = formula.GetRenderer(TexStyle.Display, 50, "Arial").RenderToBitmap(0, 0, 100);
-                src.Freeze();
-                return src;
+                TexFormulaParser parser = new();
+                try
+                {
+                    var formula = parser.Parse(latex.Replace(@"\implies", @"\Rightarrow"));
+                    var src = formula.GetRenderer(TexStyle.Display, 50, "Arial").RenderToBitmap(0, 0, 100);
+                    src.Freeze();
+                    return src;
+                }
+                catch (NullReferenceException) // because who knows why it happens
+                {
+                    return null; 
+                }
             });
     }
 }

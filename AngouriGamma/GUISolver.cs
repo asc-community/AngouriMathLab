@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace AngouriGamma
 {
-    public sealed class GUISimplifier
+    public sealed class GUISolver
     {
         private CancellationTokenSource lastTokenSource;
-        public async Task<Entity> Simplify(Entity expr)
+        public async Task<Entity> Solve(Entity expr, Entity.Variable @var)
         {
             if (lastTokenSource is not null)
                 lastTokenSource.Cancel();
@@ -21,7 +21,9 @@ namespace AngouriGamma
                     () =>
                     {
                         MathS.Multithreading.SetLocalCancellationToken(tokenSource.Token);
-                        return expr.Simplify();
+                        if (expr is Entity.Statement)
+                            return expr.Solve(@var).Simplify();
+                        return MathS.Equality(expr, 0).Solve(@var).Simplify();
                     }, tokenSource.Token
                     ).ContinueWith(t => t.IsCanceled ? "Timeout" : t.Result);
         }

@@ -32,27 +32,33 @@ namespace AngouriGamma
         }
         private Renderer renderer = new();
 
-        private GUISimplifier simplifier;
+        private GUISimplifier simplifier = new();
+        private GUISolver solver = new();
         private async void OnComputationsRequested(object sender, KeyEventArgs e)
         {
             if (e.Key != Key.Enter)
                 return;
             if (OutputSimplified is null)
                 return;
-            var text = ((TextBox)sender).Text;
+            var text = Input.Text;
             if (text is "")
                 return;
-            Entity expr, simplified;
+            var varText = InputVar.Text;
+            Entity expr, simplified, roots = "{ }";
             try
             {
                 expr = MathS.FromString(text);
                 simplified = await simplifier.Simplify(expr);
+                if (varText != "")
+                    roots = await solver.Solve(expr, varText);
+                
             }
             catch (AngouriMath.Core.Exceptions.ParseException)
             {
                 simplified = "Error";
             }
             OutputSimplified.Source = await renderer.Render(simplified.Latexise());
+            OutputRoots.Source = await renderer.Render(roots.Latexise());
         }
 
         private async void Input_TextChanged(object sender, TextChangedEventArgs e)
@@ -66,7 +72,7 @@ namespace AngouriGamma
             {
                 try
                 {
-                    return await Render(MathS.FromString(text).Latexise().Replace(@"\implies", @"\Rightarrow"));
+                    return await renderer.Render(MathS.FromString(text).Latexise().Replace(@"\implies", @"\Rightarrow"));
                 }
                 catch (AngouriMath.Core.Exceptions.ParseException)
                 {
