@@ -1,0 +1,32 @@
+name: Integration test
+
+on:
+  push:
+    branches:
+      - cpp-release
+      - cpp-full-integration-test
+  pull_request:
+    branches:
+      - cpp-release
+      - cpp-full-integration-test
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run CMake and see if it builds
+        run: |
+          cmake -S . -B build
+          cmake --build build
+          
+      - name: Run if Windows
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: ./build/Debug/TestProject
+      
+      - name: Run if Not Windows
+        if: ${{ matrix.os != 'windows-latest' }}
+        run: ./build/TestProject
