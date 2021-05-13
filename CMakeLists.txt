@@ -2,6 +2,7 @@ cmake_minimum_required (VERSION 3.8)
 
 project ("IntegrationProject")
 
+include(FetchContent)
 FetchContent_Declare(
     AngouriMath
     GIT_REPOSITORY https://github.com/asc-community/AngouriMathLab
