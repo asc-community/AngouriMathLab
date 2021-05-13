@@ -70,5 +70,6 @@ if (${IS_OSX})
 endif()
 ###
 
-target_link_libraries(${PROJECT_NAME} PUBLIC AngouriMath.CPP.Importing)
+add_library(AngouriMath INTERFACE)
+target_link_options(AngouriMath INTERFACE ${NEW_LIB_PATH} -lmylib)
 target_include_directories(${PROJECT_NAME} PUBLIC ${PATH_TO_ANGOURIMATH})
