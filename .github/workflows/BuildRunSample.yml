@@ -1,8 +1,12 @@
 name: Build and run sample
 
-on: push
-
-branches: cpp-sample
+on:
+  push:
+    branches:
+      - cpp-sample
+  pull_request:
+    branches:
+      - cpp-sample
 
 jobs:
   build:
