@@ -1,10 +1,20 @@
+<p align="center">
+
+<img src="logo.png" width="200" height="200">
+<h2 align="center">AngouriMath Laboratory</h2>
+
+<hr>
+</p>
+
+<p align="center">
+This repository is for all kinds of experiments with <a href="https://github.com/asc-community/AngouriMath">AngouriMath</a>
+</p>
+<br>
 
 
-## AngouriMathLab
 
-This repository is for experimentations with [AngouriMath](https://github.com/asc-community/AngouriMath).
 
-### Nagivation
+## Nagivation
 
 - [Try](https://github.com/asc-community/AngouriMathLab/tree/try) - here's the code that allows for the `Try Jupyter` button in the main repo.
 - [C++ Sample](https://github.com/asc-community/AngouriMathLab/tree/cpp-sample) - a full C++ sample working for all OS.
