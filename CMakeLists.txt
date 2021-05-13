@@ -9,14 +9,15 @@ set(IS_WINDOWS CMAKE_SYSTEM_NAME STREQUAL Windows)
 set(IS_LINUX CMAKE_SYSTEM_NAME STREQUAL Linux)
 set(IS_OSX CMAKE_SYSTEM_NAME STREQUAL Darwin)
 
+set(LINK_TO_RELEASE https://github.com/asc-community/AngouriMathLab/releases/download/0.0.0-poc)
 
 ### Find the right archive to download
 if (${IS_WINDOWS})
-    set(URL https://github.com/asc-community/Try/releases/download/v1.3-preview.3/AngouriMath.CPP-windows-latest-x64.zip)
+    set(URL ${LINK_TO_RELEASE}/AngouriMath.CPP-windows-latest-x64.zip)
 elseif(${IS_LINUX})
-    set(URL https://github.com/asc-community/Try/releases/download/v1.3-preview.3/AngouriMath.CPP-ubuntu-latest-x64.zip)
+    set(URL ${LINK_TO_RELEASE}/AngouriMath.CPP-ubuntu-latest-x64.zip)
 elseif(${IS_OSX})
-    set(URL https://github.com/asc-community/Try/releases/download/v1.3-preview.3/AngouriMath.CPP-macos-latest-x64.zip)
+    set(URL ${LINK_TO_RELEASE}/AngouriMath.CPP-macos-latest-x64.zip)
 else()
     message(FATAL_ERROR "OS is not recognized")
 endif()
