@@ -1,6 +1,6 @@
 <p align="center">
 
-<img src="logo.png" width="200" height="200">
+<img src="0C877A24-6F3A-4194-BB12-339051A82447.png" width="200" height="200">
 <h2 align="center">AngouriMath Laboratory</h2>
 
 <hr>
