@@ -1,6 +1,6 @@
 ## AngouriMathLab
 
-This repository is for experimentations with [AngouriMath](https://github.com/asc-community/asc-community/AngouriMath).
+This repository is for experimentations with [AngouriMath](https://github.com/asc-community/AngouriMath).
 
 ### Nagivation
 
