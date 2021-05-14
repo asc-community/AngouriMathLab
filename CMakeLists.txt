@@ -49,27 +49,10 @@ add_subdirectory(${PATH_TO_ANGOURIMATH} ${CMAKE_CURRENT_BINARY_DIR}/AngouriMath.
 
 add_library(AngouriMath INTERFACE)
 
-### Extension and copy the dynamic library depending on the OS
-set(BINARY_FILENAME ${CMAKE_SHARED_LIBRARY_PREFIX}AngouriMath.CPP.Exporting${CMAKE_SHARED_LIBRARY_SUFFIX})
-set(ANGOURIMATH_LIB ${PATH_TO_ANGOURIMATH}/out-x64/${BINARY_FILENAME} PARENT_SCOPE)
-set(NEW_LIB_DIR $<TARGET_FILE_DIR:${PROJECT_NAME}>)
-set(NEW_LIB_PATH ${NEW_LIB_DIR}/${BINARY_FILENAME})
-
-# add_custom_command(
-#     TARGET ${PROJECT_NAME}
-#     PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
-#         ${OLD_LIB_PATH}
-#         ${NEW_LIB_DIR}
-# )
-###
-
-
-### If the platform is OS X, we need to rename dylib file
-# if (${IS_OSX})
-#     add_custom_command(TARGET ${PROJECT_NAME}
-#         PRE_BUILD COMMAND
-#         install_name_tool -id "@rpath/${BINARY_FILENAME}" ${OLD_LIB_PATH})
-# endif()
+### Global variables for the user
+set(ANGOURIMATH_LIB_FILENAME ${CMAKE_SHARED_LIBRARY_PREFIX}AngouriMath.CPP.Exporting${CMAKE_SHARED_LIBRARY_SUFFIX} PARENT_SCOPE PARENT_SCOPE)
+set(ANGOURIMATH_LIB_DIR ${PATH_TO_ANGOURIMATH}/out-x64 PARENT_SCOPE)
+set(ANGOURIMATH_LIB ANGOURIMATH_LIB_DIR/${BINARY_FILENAME} PARENT_SCOPE)
 ###
 
 target_link_libraries(${PROJECT_NAME} INTERFACE AngouriMath.CPP.Exporting AngouriMath.CPP.Importing)
