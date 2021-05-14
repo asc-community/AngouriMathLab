@@ -19,9 +19,7 @@ add_executable(
     main.cpp
 )
 
-
 target_link_libraries(${PROJECT_NAME} AngouriMath)
-
 
 add_custom_command(
      TARGET ${PROJECT_NAME}
@@ -29,3 +27,9 @@ add_custom_command(
          ${ANGOURIMATH_LIB}
          $<TARGET_FILE_DIR:${PROJECT_NAME}>
  )
+
+if (CMAKE_SYSTEM_NAME STREQUAL Darwin)
+    add_custom_command(TARGET ${PROJECT_NAME}
+        POST_BUILD COMMAND
+        install_name_tool -id "@rpath/${ANGOURIMATH_LIB_FILENAME}" ${ANGOURIMATH_LIB})
+endif()
