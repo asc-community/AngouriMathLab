@@ -1,8 +1,5 @@
 cmake_minimum_required (VERSION 3.8)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 project ("IntegrationProject")
 
 include(FetchContent)
@@ -15,7 +12,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(AngouriMath)
 
 add_executable(
-	${PROJECT_NAME}
+    ${PROJECT_NAME}
     main.cpp
 )
 
