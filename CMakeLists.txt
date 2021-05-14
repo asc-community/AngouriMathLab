@@ -52,7 +52,7 @@ add_library(AngouriMath INTERFACE)
 ### Local variables
 set(LIB_FILENAME ${CMAKE_SHARED_LIBRARY_PREFIX}AngouriMath.CPP.Exporting${CMAKE_SHARED_LIBRARY_SUFFIX})
 set(LIB_DIR ${PATH_TO_ANGOURIMATH}/out-x64)
-set(LIB ${ANGOURIMATH_LIB_DIR}/${ANGOURIMATH_LIB_FILENAME})
+set(LIB ${LIB_DIR}/${LIB_FILENAME})
 ###
 
 ### Expose paths to the user
