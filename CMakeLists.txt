@@ -67,4 +67,4 @@ target_link_directories(${PROJECT_NAME} INTERFACE ${PATH_TO_ANGOURIMATH}/out-x64
 
 macro(angourimath_to_executable executable)
     add_custom_command(TARGET ${executable} PRE_BUILD COMMAND cp ${LIB} $<TARGET_FILE_DIR:${executable}>)
-endfunction()
+endmacro()
