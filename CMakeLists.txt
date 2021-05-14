@@ -66,5 +66,5 @@ target_include_directories(${PROJECT_NAME} INTERFACE ${PATH_TO_ANGOURIMATH})
 target_link_directories(${PROJECT_NAME} INTERFACE ${PATH_TO_ANGOURIMATH}/out-x64)
 
 function(angourimath_to_executable executable)
-    add_custom_command(TARGET executable PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${LIB} $<TARGET_FILE_DIR:executable>)
+    add_custom_command(TARGET ${executable} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${LIB} $<TARGET_FILE_DIR:${executable}>)
 endfunction()
