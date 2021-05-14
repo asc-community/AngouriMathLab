@@ -65,6 +65,6 @@ target_link_libraries(${PROJECT_NAME} INTERFACE AngouriMath.CPP.Exporting Angour
 target_include_directories(${PROJECT_NAME} INTERFACE ${PATH_TO_ANGOURIMATH})
 target_link_directories(${PROJECT_NAME} INTERFACE ${PATH_TO_ANGOURIMATH}/out-x64)
 
-function(angourimath_to_executable executable)
+macro(angourimath_to_executable executable)
     add_custom_command(TARGET ${executable} PRE_BUILD COMMAND cp ${LIB} $<TARGET_FILE_DIR:${executable}>)
 endfunction()
