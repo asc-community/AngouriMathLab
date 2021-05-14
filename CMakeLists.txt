@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.8)
 
-project("AMLibrary")
+project("AngouriMath")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -55,23 +55,23 @@ set(OLD_LIB_PATH ${PATH_TO_ANGOURIMATH}/out-x64/${BINARY_FILENAME})
 set(NEW_LIB_DIR $<TARGET_FILE_DIR:${PROJECT_NAME}>)
 set(NEW_LIB_PATH ${NEW_LIB_DIR}/${BINARY_FILENAME})
 
-add_custom_command(
-    TARGET ${AngouriMath}
-    PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
-        ${OLD_LIB_PATH}
-        ${NEW_LIB_DIR}
-)
+# add_custom_command(
+#     TARGET ${PROJECT_NAME}
+#     PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
+#         ${OLD_LIB_PATH}
+#         ${NEW_LIB_DIR}
+# )
 ###
 
 
 ### If the platform is OS X, we need to rename dylib file
-if (${IS_OSX})
-    add_custom_command(TARGET ${PROJECT_NAME}
-        PRE_BUILD COMMAND
-        install_name_tool -id "@rpath/${BINARY_FILENAME}" ${OLD_LIB_PATH})
-endif()
+# if (${IS_OSX})
+#     add_custom_command(TARGET ${PROJECT_NAME}
+#         PRE_BUILD COMMAND
+#         install_name_tool -id "@rpath/${BINARY_FILENAME}" ${OLD_LIB_PATH})
+# endif()
 ###
 
 
-target_link_libraries(AngouriMath INTERFACE ${NEW_LIB_PATH} -lAngouriMath.CPP.Exporting)
-target_include_directories(${PROJECT_NAME} PUBLIC ${PATH_TO_ANGOURIMATH})
+target_link_libraries(${PROJECT_NAME} INTERFACE AngouriMath.CPP.Exporting)
+target_include_directories(${PROJECT_NAME} INTERFACE ${PATH_TO_ANGOURIMATH})
