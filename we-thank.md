@@ -5,8 +5,10 @@ There can't be a single project today which is independent from others. We thank
 - [.NET Runtime](https://github.com/dotnet/runtime)
 - [Roslyn compiler](https://github.com/dotnet/roslyn)
 - [Visual Studio](https://visualstudio.microsoft.com)
-- [The F# compiler and core library](https://github.com/dotnet/fsharp)
+- [F# compiler and core library](https://github.com/dotnet/fsharp)
 - [CMake](https://github.com/Kitware/CMake)
+- [Jupyter notebooks](https://github.com/jupyter/notebook)
+- [Jupyter Binder](https://github.com/jupyterhub/binderhub)
 - [Numbers](https://github.com/peteroupc/Numbers) for great arithmetics
 - [Nullable](https://github.com/manuelroemer/Nullable)
 - [Antlr](https://github.com/antlr/antlr4)
