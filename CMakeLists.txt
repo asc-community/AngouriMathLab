@@ -14,13 +14,10 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(AngouriMath)
 
-add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${ANGOURIMATH_LIB} $<TARGET_FILE_DIR:${PROJECT_NAME}>)
-
-
 add_executable(
 	${PROJECT_NAME}
     main.cpp
 )
 
+add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${ANGOURIMATH_LIB} $<TARGET_FILE_DIR:${PROJECT_NAME}>)
 target_link_libraries(${PROJECT_NAME} AngouriMath)
-
