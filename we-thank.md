@@ -2,6 +2,11 @@
 
 There can't be a single project today which is independent from others. We thank:
 - Github for a great hosting and communication platform
+- [.NET Runtime](https://github.com/dotnet/runtime)
+- [Roslyn compiler](https://github.com/dotnet/roslyn)
+- [Visual Studio](https://visualstudio.microsoft.com)
+- [The F# compiler and core library](https://github.com/dotnet/fsharp)
+- [CMake](https://github.com/Kitware/CMake)
 - [Numbers](https://github.com/peteroupc/Numbers) for great arithmetics
 - [Nullable](https://github.com/manuelroemer/Nullable)
 - [Antlr](https://github.com/antlr/antlr4)
