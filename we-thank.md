@@ -3,9 +3,12 @@
 There can't be a single project today which is independent from others. We thank:
 - Github for a great hosting and communication platform
 - [.NET Runtime](https://github.com/dotnet/runtime)
+- [.NET SDK](https://github.com/dotnet/sdk)
 - [Roslyn compiler](https://github.com/dotnet/roslyn)
 - [Visual Studio](https://visualstudio.microsoft.com)
 - [F# compiler and core library](https://github.com/dotnet/fsharp)
+- [.NET Native AOT](https://github.com/dotnet/runtimelab/tree/feature/NativeAOT)
+- [Git](https://github.com/git/git)
 - [CMake](https://github.com/Kitware/CMake)
 - [Jupyter notebooks](https://github.com/jupyter/notebook)
 - [Jupyter Binder](https://github.com/jupyterhub/binderhub)
