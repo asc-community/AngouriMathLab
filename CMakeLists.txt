@@ -47,6 +47,8 @@ endif()
 add_subdirectory(${PATH_TO_ANGOURIMATH} ${CMAKE_CURRENT_BINARY_DIR}/AngouriMath.CPP.Importing)
 ###
 
+add_library(AngouriMath INTERFACE)
+
 ### Extension and copy the dynamic library depending on the OS
 set(BINARY_FILENAME ${CMAKE_SHARED_LIBRARY_PREFIX}AngouriMath.CPP.Exporting${CMAKE_SHARED_LIBRARY_SUFFIX})
 set(OLD_LIB_PATH ${PATH_TO_ANGOURIMATH}/out-x64/${BINARY_FILENAME})
@@ -54,7 +56,7 @@ set(NEW_LIB_DIR $<TARGET_FILE_DIR:${PROJECT_NAME}>)
 set(NEW_LIB_PATH ${NEW_LIB_DIR}/${BINARY_FILENAME})
 
 add_custom_command(
-    TARGET ${PROJECT_NAME}
+    TARGET ${AngouriMath}
     PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
         ${OLD_LIB_PATH}
         ${NEW_LIB_DIR}
@@ -70,6 +72,6 @@ if (${IS_OSX})
 endif()
 ###
 
-add_library(AngouriMath INTERFACE)
-target_link_options(AngouriMath INTERFACE ${NEW_LIB_PATH} -lmylib)
+
+target_link_libraries(AngouriMath INTERFACE ${NEW_LIB_PATH} -lAngouriMath.CPP.Exporting)
 target_include_directories(${PROJECT_NAME} PUBLIC ${PATH_TO_ANGOURIMATH})
