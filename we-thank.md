@@ -14,4 +14,5 @@ There can't be a single project today which is independent from others. We thank
 - [Antlr](https://github.com/antlr/antlr4)
 - [Octicons](https://iconify.design/icon-sets/octicon/)
 - [flaticon](https://www.flaticon.com) for great icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a>
+- [Discord](https://discord.com/invite/YWJEX7a) for communications
 - *More coming soon...*
