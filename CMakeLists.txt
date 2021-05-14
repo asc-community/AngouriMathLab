@@ -75,4 +75,4 @@ set(NEW_LIB_PATH ${NEW_LIB_DIR}/${BINARY_FILENAME})
 
 target_link_libraries(${PROJECT_NAME} INTERFACE AngouriMath.CPP.Exporting)
 target_include_directories(${PROJECT_NAME} INTERFACE ${PATH_TO_ANGOURIMATH})
-target_link_directories(${PROJECT_NAME} INTERFACE ${PATH_TO_ANGOURIMATH})
+target_link_directories(${PROJECT_NAME} INTERFACE ${PATH_TO_ANGOURIMATH}/out-x64)
