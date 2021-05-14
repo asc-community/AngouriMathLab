@@ -2,8 +2,6 @@
 
 <img src="amlablogo.png" width="200" height="200">
 <h2 align="center">AngouriMath Laboratory</h2>
-
-<hr>
 </p>
 
 <p align="center">
