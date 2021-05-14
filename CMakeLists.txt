@@ -28,7 +28,7 @@ add_custom_command(
          $<TARGET_FILE_DIR:${PROJECT_NAME}>
  )
 
-set(CMAKE_BUILD_RPATH_USE_ORIGIN false)
+# set(CMAKE_BUILD_RPATH_USE_ORIGIN false)
 
 # if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
 #     add_custom_command(TARGET ${PROJECT_NAME}
