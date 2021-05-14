@@ -19,5 +19,6 @@ add_executable(
     main.cpp
 )
 
-add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${ANGOURIMATH_LIB} $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+angourimath_to_executable(${PROJECT_NAME})
+# add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${ANGOURIMATH_LIB} $<TARGET_FILE_DIR:${PROJECT_NAME}>)
 target_link_libraries(${PROJECT_NAME} AngouriMath)
