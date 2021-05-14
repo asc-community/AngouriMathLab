@@ -28,8 +28,10 @@ add_custom_command(
          $<TARGET_FILE_DIR:${PROJECT_NAME}>
  )
 
-if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-    add_custom_command(TARGET ${PROJECT_NAME}
-        PRE_BUILD COMMAND
-        install_name_tool -id "@rpath/${ANGOURIMATH_LIB_FILENAME}" ${ANGOURIMATH_LIB})
-endif()
+set(CMAKE_BUILD_RPATH_USE_ORIGIN false)
+
+# if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+#     add_custom_command(TARGET ${PROJECT_NAME}
+#         PRE_BUILD COMMAND
+#         install_name_tool -id "@rpath/${ANGOURIMATH_LIB_FILENAME}" ${ANGOURIMATH_LIB})
+# endif()
