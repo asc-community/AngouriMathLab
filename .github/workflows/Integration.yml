@@ -14,7 +14,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [windows-latest, ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -25,8 +25,8 @@ jobs:
           
       - name: Run if Windows
         if: ${{ matrix.os == 'windows-latest' }}
-        run: ./build/Debug/TestProject
+        run: ./build/Debug/IntegrationTest
       
       - name: Run if Not Windows
         if: ${{ matrix.os != 'windows-latest' }}
-        run: ./build/TestProject
+        run: ./build/IntegrationTest
