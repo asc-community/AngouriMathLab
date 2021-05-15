@@ -20,4 +20,4 @@ add_executable(
 )
 
 angourimath_to_executable(${PROJECT_NAME})
-target_link_libraries(${PROJECT_NAME} AngouriMath)
+target_link_libraries(${PROJECT_NAME} PRIVATE AngouriMath)
