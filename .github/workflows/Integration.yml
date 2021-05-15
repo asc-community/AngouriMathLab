@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - cpp-release
-      - cpp-full-integration-test
+      - cpp-sample
   pull_request:
     branches:
       - cpp-release
-      - cpp-full-integration-test
+      - cpp-sample
 
 jobs:
   build:
