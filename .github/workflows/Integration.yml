@@ -20,8 +20,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Run CMake and see if it builds
         run: |
-          cmake -S . -B build
-          cmake --build build
+          cmake -S .
+          cmake --build
           
       - name: Run if Windows
         if: ${{ matrix.os == 'windows-latest' }}
