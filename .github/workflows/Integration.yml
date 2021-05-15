@@ -21,7 +21,7 @@ jobs:
       - name: Run CMake and see if it builds
         run: |
           cmake -S .
-          cmake --build
+          cmake --build .
           
       - name: Run if Windows
         if: ${{ matrix.os == 'windows-latest' }}
