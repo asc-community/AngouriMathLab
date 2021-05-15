@@ -17,5 +17,9 @@ int main()
     Entity expr2 = "[[3, 4], [a, b]] ^ 2";
     std::cout << expr2.Simplify() << "\n";
 
+    // latex
+    Entity expr3 = "integral(x^2, x) + [1, 2, 3] + sqrt(x ^ y)";
+    std::cout << expr3.Latexise();
+
     return 0;
 }
