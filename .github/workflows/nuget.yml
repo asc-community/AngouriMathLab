@@ -26,9 +26,9 @@ jobs:
           dotnet build -c release
           
           # versioning
-          commithash=$(git rev-parse --verify HEAD)
+          commithash=$(git rev-parse --short HEAD)
           echo "commit hash is $commithash"
-          name=0.0.0.master-$commithash
+          name=0.0.0.master$commithash
           echo "name is $name"
           
           dotnet pack -c release -p:PackageVersion=$name
