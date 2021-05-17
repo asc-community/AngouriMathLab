@@ -22,9 +22,10 @@ jobs:
           cd Sources/AngouriMath
           dotnet restore
           dotnet build -c release
-          suff = $(git rev-parse --verify HEAD)
+          suff=$(git rev-parse --verify HEAD)
           echo "suff is $suff"
-          dotnet pack -c release --version-suffix $suff
+          name=AngouriMath.$suff
+          dotnet pack -c release -p:PackageVersion=$name
           dotnet nuget add source --username WhiteBlackGoose --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/OWNER/index.json"
           cd bin/Release
-          dotnet nuget push AngouriMath.1.3.0-preview.4.$suff.nupkg --api-key ${{ secrets.PACKAGES }} --source "github"
+          dotnet nuget push $name.nupkg --api-key ${{ secrets.PACKAGES }} --source "github"
