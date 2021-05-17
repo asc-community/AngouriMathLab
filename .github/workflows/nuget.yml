@@ -40,8 +40,8 @@ jobs:
           # AngouriMath.FSharp
           cd Wrappers/AngouriMath.FSharp
           dotnet restore
-          dotnet build -c release
-          dotnet pack -c release -p:PackageVersion=$name
+          dotnet build -c Release
+          dotnet pack -c Release -p:PackageVersion=$name
           cd bin/release
           dotnet nuget push AngouriMath.FSharp.$name.nupkg --api-key ${{ secrets.PACKAGES }} --source "github"
           cd ../../../..
@@ -49,8 +49,8 @@ jobs:
           # AngouriMath.Interactive
           cd Wrappers/AngouriMath.Interactive
           dotnet restore
-          dotnet build -c release
-          dotnet pack -c release -p:PackageVersion=$name
+          dotnet build -c Release
+          dotnet pack -c Release -p:PackageVersion=$name
           cd bin/release
           dotnet nuget push AngouriMath.Interactive.$name.nupkg --api-key ${{ secrets.PACKAGES }} --source "github"
           cd ../../../..
