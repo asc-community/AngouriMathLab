@@ -20,12 +20,18 @@ jobs:
       - name: 'Pack AngouriMath'
         run: |
           cd Sources/AngouriMath
+          
+          # building
           dotnet restore
           dotnet build -c release
-          set suff=$(git rev-parse --verify HEAD)
-          echo "suff is %suff%"
-          set name=AngouriMath.$suff
+          
+          # versioning
+          git rev-parse --verify HEAD > currcommit
+          set /p commithash=<currcommit
+          echo "commit hash is %commithash%"
+          set name=AngouriMath.%commit%
           echo "name is %name%"
+          
           dotnet pack -c release -p:PackageVersion=%name%
           dotnet nuget add source --username WhiteBlackGoose --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/OWNER/index.json"
           cd bin/Release
