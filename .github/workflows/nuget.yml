@@ -24,8 +24,10 @@ jobs:
           
           # versioning
           commithash=$(git rev-parse --short HEAD)
+          currtime=$(date +%s)
           echo "commit hash is $commithash"
-          name=0.0.0-master$commithash
+          echo "time is $currtime"
+          name=0.0.0-master-$currtime-$commithash
           echo "name is $name"
           
           # AngouriMath
