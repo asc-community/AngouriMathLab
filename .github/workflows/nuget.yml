@@ -36,7 +36,7 @@ jobs:
           dotnet build -c release
           dotnet pack -c release -p:PackageVersion=$name
           cd bin/release
-          dotnet nuget push AngouriMath.$name.nupkg --api-key ${{ secrets.PACKAGES }} --source "myget"
+          dotnet nuget push AngouriMath.$name.nupkg --api-key ${{ secrets.MYGET_KEY }} --source "myget"
           cd ../../..
           
           # AngouriMath.FSharp
@@ -45,7 +45,7 @@ jobs:
           dotnet build -c Release
           dotnet pack -c Release -p:PackageVersion=$name
           cd bin/Release
-          dotnet nuget push AngouriMath.FSharp.$name.nupkg --api-key ${{ secrets.PACKAGES }} --source "myget"
+          dotnet nuget push AngouriMath.FSharp.$name.nupkg --api-key ${{ secrets.MYGET_KEY }} --source "myget"
           cd ../../../..
           
           # AngouriMath.Interactive
@@ -54,5 +54,5 @@ jobs:
           dotnet build -c Release
           dotnet pack -c Release -p:PackageVersion=$name
           cd bin/Release
-          dotnet nuget push AngouriMath.Interactive.$name.nupkg --api-key ${{ secrets.PACKAGES }} --source "myget"
+          dotnet nuget push AngouriMath.Interactive.$name.nupkg --api-key ${{ secrets.MYGET_KEY }} --source "myget"
           cd ../../../..
