@@ -26,7 +26,8 @@ jobs:
           dotnet build -c release
           
           # versioning
-          commithash=$(git rev-parse --short HEAD)
+          # commithash=$(git rev-parse --short HEAD)
+          commithash=65598a8f
           echo "commit hash is $commithash"
           name=0.0.0-master$commithash
           echo "name is $name"
