@@ -25,4 +25,4 @@ jobs:
           dotnet pack -c release
           dotnet nuget add source --username WhiteBlackGoose --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/OWNER/index.json"
           cd bin/Release
-          dotnet nuget push AngouriMath.1.3.0-preview.4.nupkg --api-key ${{ secrets.PACKAGES }}
+          dotnet nuget push AngouriMath.1.3.0-preview.4.nupkg --api-key ${{ secrets.PACKAGES }} --source "github"
