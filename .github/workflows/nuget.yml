@@ -26,13 +26,12 @@ jobs:
           dotnet build -c release
           
           # versioning
-          git rev-parse --verify HEAD > currcommit
-          set /p commithash=<currcommit
-          echo "commit hash is %commithash%"
-          set name=AngouriMath.%commit%
-          echo "name is %name%"
+          commithash=$(git rev-parse --verify HEAD)
+          echo "commit hash is $commithash"
+          name=AngouriMath.$commithash
+          echo "name is $name"
           
-          dotnet pack -c release -p:PackageVersion=%name%
+          dotnet pack -c release -p:PackageVersion=$name
           dotnet nuget add source --username WhiteBlackGoose --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/OWNER/index.json"
-          cd bin/Release
-          dotnet nuget push %name%.nupkg --api-key ${{ secrets.PACKAGES }} --source "github"
+          cd bin/release
+          dotnet nuget push $name.nupkg --api-key ${{ secrets.PACKAGES }} --source "github"
