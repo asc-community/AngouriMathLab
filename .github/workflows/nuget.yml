@@ -19,20 +19,38 @@ jobs:
         
       - name: 'Pack AngouriMath'
         run: |
-          cd Sources/AngouriMath
-          
-          # building
-          dotnet restore
-          dotnet build -c release
+          cd Sources
+          dotnet nuget add source --username WhiteBlackGoose --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/OWNER/index.json"
           
           # versioning
-          # commithash=$(git rev-parse --short HEAD)
-          commithash=65598a8f
+          commithash=$(git rev-parse --short HEAD)
           echo "commit hash is $commithash"
           name=0.0.0-master$commithash
           echo "name is $name"
           
+          # AngouriMath
+          cd AngouriMath
+          dotnet restore
+          dotnet build -c release
           dotnet pack -c release -p:PackageVersion=$name
-          dotnet nuget add source --username WhiteBlackGoose --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/OWNER/index.json"
           cd bin/release
           dotnet nuget push AngouriMath.$name.nupkg --api-key ${{ secrets.PACKAGES }} --source "github"
+          cd ..
+          
+          # AngouriMath.FSharp
+          cd Wrappers/AngouriMath.FSharp
+          dotnet restore
+          dotnet build -c release
+          dotnet pack -c release -p:PackageVersion=$name
+          cd bin/release
+          dotnet nuget push AngouriMath.FSharp.$name.nupkg --api-key ${{ secrets.PACKAGES }} --source "github"
+          cd ../..
+          
+          # AngouriMath.Interactive
+          cd Wrappers/AngouriMath.Interactive
+          dotnet restore
+          dotnet build -c release
+          dotnet pack -c release -p:PackageVersion=$name
+          cd bin/release
+          dotnet nuget push AngouriMath.Interactive.$name.nupkg --api-key ${{ secrets.PACKAGES }} --source "github"
+          cd ../..
