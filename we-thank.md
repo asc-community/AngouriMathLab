@@ -19,4 +19,6 @@ There can't be a single project today which is independent from others. We thank
 - [Octicons](https://iconify.design/icon-sets/octicon/)
 - [flaticon](https://www.flaticon.com) for great icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a>
 - [Discord](https://discord.com/invite/YWJEX7a) for communications
+- All awesome FOSS [dependecies](https://www.nuget.org/packages/AngouriMath) we have
+- JetBrains for IDEs
 - *More coming soon...*
